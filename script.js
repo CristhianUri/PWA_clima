@@ -51,75 +51,47 @@ async function fetchWeather(city) {
 function displayWeather(data) {
     weatherDataDiv.innerHTML = '';
 
+    if (data.list.length === 0) {
+        weatherDataDiv.classList.remove('has-data');
+        return;
+    }
+
+    weatherDataDiv.classList.add('has-data'); // Muestra el fondo cuando hay datos
+
+   
     const cityHeader = document.createElement('h2');
     cityHeader.textContent = `${data.city.name}, ${data.city.country}`;
     weatherDataDiv.appendChild(cityHeader);
 
     const dailyForecast = {};
 
-    // Agrupar pronósticos por fecha y guardar el más cercano a las 12:00 (o cualquier hora disponible)
     data.list.forEach(forecast => {
         const forecastDate = new Date(forecast.dt_txt);
         const dateKey = forecastDate.toISOString().split('T')[0];
 
-        // Guardar el pronóstico del día de hoy lo más cerca posible de la hora actual
-        const currentHour = new Date().getHours();
-        const forecastHour = forecastDate.getUTCHours();
-
-        if (forecastDate.toISOString().split('T')[0] === new Date().toISOString().split('T')[0] && 
-            Math.abs(forecastHour - currentHour) < 3) { // Pronóstico más cercano a la hora actual para hoy
-            dailyForecast[dateKey] = forecast;
-        } else if (!dailyForecast[dateKey] || forecastHour === 12) { // O pronóstico para las 12:00 para otros días
+        if (!dailyForecast[dateKey] || forecastDate.getUTCHours() === 12) {
             dailyForecast[dateKey] = forecast;
         }
     });
 
-    // Obtener pronósticos para hoy y los próximos cuatro días
-    const today = new Date().toISOString().split('T')[0];
-    const forecastArray = Object.values(dailyForecast)
-        .filter(day => new Date(day.dt_txt).toISOString().split('T')[0] >= today)
-        .slice(0, 5); // Limitar a 5 días, incluido el de hoy
-
-    // Renderizar el pronóstico
-    forecastArray.forEach(day => {
+    Object.values(dailyForecast).slice(0, 5).forEach(day => {
         const card = document.createElement('div');
         card.classList.add('weather-card');
 
-        card.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-        card.style.padding = '15px';
-        card.style.borderRadius = '8px';
-        card.style.textAlign = 'center';
-        card.style.margin = '10px';
-        card.style.boxShadow = '0px 4px 6px rgba(0, 0, 0, 0.1)';
-
-        const options = { day: 'numeric', month: 'long' };
-        const dateString = new Date(day.dt_txt).toLocaleDateString('es-ES', options);
-
         const dateText = document.createElement('p');
-        dateText.textContent = dateString;
-        dateText.style.fontSize = '16px';
-        dateText.style.color = '#333';
-        dateText.style.margin = '5px 0';
+        dateText.textContent = new Date(day.dt_txt).toLocaleDateString('es-ES', {
+            day: 'numeric',
+            month: 'long',
+        });
 
         const tempText = document.createElement('p');
         tempText.textContent = `${Math.round(day.main.temp)}°C`;
-        tempText.style.fontSize = '16px';
-        tempText.style.color = '#333';
-        tempText.style.margin = '5px 0';
 
         const descText = document.createElement('p');
         descText.textContent = day.weather[0].description;
-        descText.style.fontSize = '16px';
-        descText.style.color = '#333';
-        descText.style.margin = '5px 0';
 
         const icon = document.createElement('img');
         icon.src = `http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`;
-        icon.alt = 'Weather icon';
-        icon.style.width = '80px';
-        icon.style.height = '80px';
-        icon.style.display = 'block';
-        icon.style.margin = '0 auto';
 
         card.appendChild(dateText);
         card.appendChild(tempText);
@@ -128,6 +100,13 @@ function displayWeather(data) {
 
         weatherDataDiv.appendChild(card);
     });
+
+    // Muestra el contenedor si tiene contenido
+    if (weatherDataDiv.innerHTML.trim() !== '') {
+        weatherDataDiv.classList.add('has-content');
+    } else {
+        weatherDataDiv.classList.remove('has-content');
+    }
 }
 
 weatherForm.addEventListener('submit', (e) => {

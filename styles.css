@@ -48,53 +48,90 @@ body {
 }
 
 #weatherData {
-    position: relative; 
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    margin-top: 20px;
-    overflow: hidden;
-    background-color: #5caff3;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+  
+  background-color: #5caff3;
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+  max-height: 60vh; /* Limita la altura máxima de la sección */
+  border-radius: 8px;
+  padding: 10px;
+  opacity: 0; /* Comienza invisible */
+  transition: opacity 0.3s ease-in-out; /* Suaviza la transición */
+}
+
+#weatherData.has-content {
+  opacity: 1; /* Muestra la sección cuando hay contenido */
+   background-image: url('cielo3.png');
+    background-size: cover; /* Imagen se adapta al contenedor */
+    background-position: center;
+    background-repeat: no-repeat;
+
 }
 
 #weatherData::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url(cielo.jpg);
-    background-size: cover; 
-    background-position: center; 
-    opacity: 0.5;
-    z-index: 1; 
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+ /* background-image: url(cielo.jpg);*/
+  background-size: cover;
+  background-position: center;
+  
+  z-index: 1;
 }
 
 #weatherData > * {
-    position: relative; 
-    z-index: 2; 
-    
+  position: relative;
+  z-index: 2;
 }
 
 .weather-card {
-  cursor: auto; /* Usa auto para asegurar que no se vea como texto editable */
+  cursor: auto;
   background: rgba(255, 255, 255, 0.1);
   padding: 10px;
-  
   text-align: center;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
 }
 
-
 .weather-card img {
-    width: 50px;
-    height: 50px;
-   
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  display: block;
 }
 
 .weather-card p {
-    margin: 5px 0;
+  margin: 5px 0;
 }
+
+.weather-card {
+  cursor: auto;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+}
+
+.weather-card img {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  display: block;
+}
+
+.weather-card p {
+  margin: 5px 0;
+}
+
+
 #locations, button {
   cursor: pointer; /* Asegura que los botones generados sean clicables */
 }
