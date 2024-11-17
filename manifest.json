@@ -2,17 +2,24 @@
     "name": "APP DE CLIMA",
     "short_name": "CLIMA",
     "description": "Consulta el clima y guarda tus ciudades favoritas.",
-    "start_url": "/index.html",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#5CAFF3",
     "icons": [
-       
-        
-        {
-            "src": "/clima.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ]
-}
+      {
+        "src": "/clima.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/clima.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "scope": "/",
+    "orientation": "portrait",
+    "prefer_related_applications": false
+  }
+  

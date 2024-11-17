@@ -4,7 +4,12 @@ const urlsToCache = [
   '/index.html',
   '/styles.css',
   '/app.js',
-  '/service-worker.js',  // Asegúrate de que el service worker esté en la caché
+  '/service-worker.js',
+  '/cielo3.png',
+  '/clima.png',
+  '/flecha-abajo.png',
+  
+  // Asegúrate de que el service worker esté en la caché
   // Agrega otros archivos necesarios
 ];
 
