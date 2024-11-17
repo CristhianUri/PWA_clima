@@ -8,11 +8,7 @@
     "theme_color": "#5CAFF3",
     "icons": [
        
-        {
-            "src": "/flecha-abajo.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        },
+        
         {
             "src": "/clima.png",
             "sizes": "512x512",
